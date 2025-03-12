@@ -298,4 +298,12 @@ h1::after {
     .song-lyrics {
         font-size: 0.8rem;
     }
+}
+
+.note {
+    font-size: 0.85rem;
+    color: var(--gray-800);
+    text-align: center;
+    margin-top: 0.5rem;
+    font-style: italic;
 } 
