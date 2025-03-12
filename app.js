@@ -5,47 +5,62 @@ const GEMINI_API_URL = 'https://generativelanguage.googleapis.com/v1beta/models/
 const getSongBtn = document.getElementById('getSongBtn');
 const songSuggestion = document.getElementById('songSuggestion');
 
-function createSongInfoItem(icon, text) {
+function createSongItem(rank, songInfo) {
     return `
         <div class="song-info-item">
-            <span class="material-icons">${icon}</span>
-            ${text}
+            <div class="song-info-rank">#${rank}</div>
+            <div class="song-info-content">
+                <div class="song-title">${songInfo.title}</div>
+                <div class="song-artist">${songInfo.artist}</div>
+            </div>
         </div>
     `;
 }
 
-function formatSongSuggestion(text) {
-    const lines = text.split('\n').map(line => line.trim()).filter(line => line);
-    let html = '';
-
-    lines.forEach(line => {
-        if (line.startsWith('Tên bài hát:')) {
-            html += createSongInfoItem('music_note', line);
-        } else if (line.startsWith('Ca sĩ:')) {
-            html += createSongInfoItem('person', line);
-        } else if (line.startsWith('Thể loại:')) {
-            html += createSongInfoItem('category', line);
-        } else if (line.startsWith('Năm phát hành:')) {
-            html += createSongInfoItem('calendar_today', line);
-        } else if (line.startsWith('Lý do đề xuất:')) {
-            html += createSongInfoItem('lightbulb', line);
+function formatSongList(text) {
+    try {
+        // Xử lý chuỗi JSON từ API
+        const cleanJson = text.replace(/```json\n|\n```/g, '').trim();
+        const songs = JSON.parse(cleanJson);
+        
+        if (!Array.isArray(songs) || songs.length !== 10) {
+            throw new Error('Dữ liệu không đúng định dạng mảng 10 bài hát');
         }
-    });
 
-    return html;
+        return songs.map((song, index) => createSongItem(index + 1, {
+            title: song.title.trim(),
+            artist: song.artist.trim()
+        })).join('');
+    } catch (error) {
+        console.error('Lỗi khi xử lý dữ liệu:', error);
+        return createSongItem(1, {
+            title: 'Có lỗi xảy ra khi xử lý dữ liệu',
+            artist: 'Vui lòng thử lại'
+        });
+    }
 }
 
 async function getSongSuggestion() {
     try {
         getSongBtn.disabled = true;
-        songSuggestion.innerHTML = createSongInfoItem('hourglass_empty', 'Đang tìm kiếm bài hát phù hợp...');
+        songSuggestion.innerHTML = `
+            <div class="song-info-item">
+                <span class="material-icons">hourglass_empty</span>
+                <div class="song-info-content">
+                    <div class="song-title">Đang tải danh sách...</div>
+                    <div class="song-artist">Vui lòng đợi trong giây lát</div>
+                </div>
+            </div>
+        `;
 
-        const prompt = `Hãy đề xuất một bài hát ngẫu nhiên bằng tiếng Việt. Trả về theo định dạng:
-        Tên bài hát: [tên]
-        Ca sĩ: [ca sĩ]
-        Thể loại: [thể loại]
-        Năm phát hành: [năm]
-        Lý do đề xuất: [lý do ngắn gọn]`;
+        const prompt = `Trả về danh sách 10 bài hát karaoke tiếng Việt phổ biến nhất hiện nay.
+        Format JSON:
+        [
+            {
+                "title": "Tên bài hát",
+                "artist": "Tên ca sĩ"
+            }
+        ]`;
 
         const response = await fetch(`${GEMINI_API_URL}?key=${API_KEY}`, {
             method: 'POST',
@@ -57,7 +72,12 @@ async function getSongSuggestion() {
                     parts: [{
                         text: prompt
                     }]
-                }]
+                }],
+                generationConfig: {
+                    temperature: 0.2,
+                    topK: 1,
+                    topP: 1
+                }
             })
         });
 
@@ -67,11 +87,11 @@ async function getSongSuggestion() {
 
         const data = await response.json();
         
-        if (data.candidates && data.candidates[0] && data.candidates[0].content) {
+        if (data.candidates && data.candidates[0]?.content?.parts?.[0]?.text) {
             const suggestion = data.candidates[0].content.parts[0].text;
             songSuggestion.style.opacity = '0';
             setTimeout(() => {
-                songSuggestion.innerHTML = formatSongSuggestion(suggestion);
+                songSuggestion.innerHTML = formatSongList(suggestion);
                 songSuggestion.style.opacity = '1';
             }, 200);
         } else {
@@ -79,7 +99,15 @@ async function getSongSuggestion() {
         }
     } catch (error) {
         console.error('Lỗi:', error);
-        songSuggestion.innerHTML = createSongInfoItem('error', 'Có lỗi xảy ra. Vui lòng thử lại sau.');
+        songSuggestion.innerHTML = `
+            <div class="song-info-item">
+                <span class="material-icons">error</span>
+                <div class="song-info-content">
+                    <div class="song-title">Có lỗi xảy ra: ${error.message}</div>
+                    <div class="song-artist">Vui lòng thử lại sau</div>
+                </div>
+            </div>
+        `;
     } finally {
         getSongBtn.disabled = false;
     }
@@ -90,7 +118,7 @@ getSongBtn.addEventListener('click', () => {
     const originalContent = getSongBtn.innerHTML;
     getSongBtn.innerHTML = `
         <span class="material-icons loading">sync</span>
-        Đang tìm...
+        Đang tải...
     `;
     getSongSuggestion().finally(() => {
         getSongBtn.innerHTML = originalContent;

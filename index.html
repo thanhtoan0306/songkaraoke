@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Ứng dụng gợi ý bài hát thông minh sử dụng AI">
-    <meta name="keywords" content="gợi ý bài hát, AI, nhạc Việt Nam, đề xuất nhạc">
-    <meta name="theme-color" content="#1976d2">
-    <meta property="og:title" content="Gợi Ý Bài Hát AI">
-    <meta property="og:description" content="Khám phá những bài hát mới mẻ với AI">
+    <meta name="description" content="Top bài hát karaoke được yêu thích">
+    <meta name="keywords" content="karaoke, bài hát hot, nhạc Việt Nam, top hits">
+    <meta name="theme-color" content="#000000">
+    <meta property="og:title" content="Top Karaoke Hits">
+    <meta property="og:description" content="Khám phá top bài hát karaoke hot nhất tháng">
     <meta property="og:type" content="website">
-    <title>Gợi Ý Bài Hát AI</title>
+    <title>Top Karaoke Hits</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="manifest" href="manifest.json">
     <link rel="icon" type="image/png" href="icon-192x192.png">
@@ -17,16 +17,23 @@
 </head>
 <body>
     <div class="container">
-        <h1><span class="material-icons">music_note</span> Gợi Ý Bài Hát</h1>
+        <div class="step-indicator">
+            <span class="step-text">TOP HITS</span>
+            <span class="material-icons">trending_up</span>
+        </div>
+        <h1>Top 10 Bài Hát Karaoke Hot Nhất Tháng</h1>
         <button id="getSongBtn" class="pulse-button">
-            <span class="material-icons">shuffle</span>
-            Gợi Ý Bài Hát Mới
+            <span class="material-icons">auto_awesome</span>
+            Khám phá ngay
         </button>
         <div id="result" class="result-container">
             <div id="songSuggestion" class="song-info">
                 <div class="song-info-item">
-                    <span class="material-icons">play_circle</span>
-                    Nhấn nút để nhận gợi ý bài hát
+                    <span class="material-icons">music_note</span>
+                    <div class="song-info-content">
+                        <div class="song-title">Nhấn nút để xem top bài hát</div>
+                        <div class="song-artist">Cập nhật mới nhất trong tháng</div>
+                    </div>
                 </div>
             </div>
         </div>

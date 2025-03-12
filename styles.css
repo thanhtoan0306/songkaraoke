@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;700&family=Inter:wght@300;400;500&display=swap');
 
 * {
     margin: 0;
@@ -7,142 +7,184 @@
 }
 
 :root {
-    --primary: #1976d2;
-    --primary-light: #42a5f5;
-    --primary-dark: #1565c0;
-    --text-primary: #212121;
-    --text-secondary: #757575;
-    --background: #fafafa;
-    --paper: #ffffff;
-    --error: #d32f2f;
+    --black: #000000;
+    --white: #ffffff;
+    --gray-100: #f8f9fa;
+    --gray-200: #e9ecef;
+    --gray-300: #e0e0e0;
+    --gray-800: #343a40;
+    --accent: #ff4d4d;
 }
 
 body {
-    font-family: 'Roboto', sans-serif;
-    background-color: var(--background);
+    font-family: 'Inter', sans-serif;
+    background-color: var(--white);
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: var(--text-primary);
+    color: var(--black);
+    padding: 1rem;
 }
 
 .container {
-    background-color: var(--paper);
-    padding: 2rem;
-    border-radius: 8px;
-    width: 90%;
-    max-width: 600px;
-    box-shadow: 0 3px 6px rgba(0,0,0,0.1);
-    transition: box-shadow 0.3s ease;
+    background-color: var(--white);
+    padding: 2.5rem;
+    width: 100%;
+    max-width: 480px;
+    position: relative;
+    border: 1px solid var(--gray-300);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-.container:hover {
-    box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+.container::after {
+    content: '';
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 60%;
+    height: 60%;
+    background: repeating-linear-gradient(45deg, var(--gray-800) 0, var(--gray-800) 1px, transparent 1px, transparent 8px);
+    z-index: -1;
+    opacity: 0.3;
 }
 
 h1 {
-    font-size: 2rem;
-    font-weight: 500;
-    color: var(--text-primary);
-    margin-bottom: 2rem;
-    text-align: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: var(--black);
+    margin-bottom: 2.5rem;
+    line-height: 1.2;
+    position: relative;
+}
+
+h1::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 60px;
+    height: 3px;
+    background-color: var(--accent);
 }
 
 .pulse-button {
-    background-color: var(--primary);
-    color: white;
-    padding: 0.8rem 1.5rem;
+    background-color: var(--black);
+    color: var(--white);
+    padding: 1.2rem 1.5rem;
     border: none;
-    border-radius: 4px;
-    font-size: 1rem;
-    font-weight: 500;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+    border-radius: 0;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 1px;
     cursor: pointer;
-    transition: all 0.2s ease;
-    box-shadow: 0 2px 4px rgba(25, 118, 210, 0.2);
-    position: relative;
-    overflow: hidden;
-}
-
-.pulse-button::after {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 5px;
-    height: 5px;
-    background: rgba(255, 255, 255, 0.5);
-    opacity: 0;
-    border-radius: 100%;
-    transform: scale(1, 1) translate(-50%);
-    transform-origin: 50% 50%;
+    transition: all 0.3s ease;
+    width: 100%;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.8rem;
 }
 
 .pulse-button:hover {
-    background-color: var(--primary-dark);
-    box-shadow: 0 4px 8px rgba(25, 118, 210, 0.3);
+    background-color: var(--accent);
+    color: var(--white);
 }
 
 .pulse-button:active {
-    transform: scale(0.98);
+    transform: translateY(1px);
 }
 
 .pulse-button:disabled {
-    background-color: var(--text-secondary);
+    background-color: var(--gray-800);
+    color: var(--gray-200);
     cursor: not-allowed;
 }
 
 .result-container {
     margin-top: 2rem;
-    padding: 1.5rem;
-    background-color: var(--background);
-    border-radius: 4px;
+    padding: 0;
+    background-color: transparent;
     min-height: 100px;
     transition: all 0.3s ease;
-}
-
-#songSuggestion {
-    font-size: 1rem;
-    line-height: 1.6;
-    color: var(--text-primary);
-    white-space: pre-line;
 }
 
 .song-info {
     display: grid;
     gap: 1rem;
-    margin-top: 1rem;
 }
 
 .song-info-item {
     display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.5rem;
-    background: var(--paper);
-    border-radius: 4px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.2rem;
+    background: var(--gray-100);
+    border-left: 3px solid var(--accent);
+    transition: all 0.3s ease;
 }
 
-.song-info-item i {
-    color: var(--primary);
+.song-info-item:hover {
+    background: var(--white);
+    border-left-width: 6px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.song-info-item .material-icons {
+    color: var(--accent);
     font-size: 1.2rem;
+}
+
+.song-info-rank {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--accent);
+    min-width: 40px;
+}
+
+.song-info-content {
+    flex: 1;
+}
+
+.song-title {
+    font-weight: 500;
+    margin-bottom: 0.3rem;
+}
+
+.song-artist {
+    color: var(--gray-800);
+    font-size: 0.9rem;
 }
 
 .loading {
     display: inline-block;
-    width: 1.5rem;
-    height: 1.5rem;
-    border: 2px solid rgba(255,255,255,0.3);
+    width: 1.2rem;
+    height: 1.2rem;
+    border: 2px solid var(--gray-800);
     border-radius: 50%;
-    border-top-color: white;
-    animation: spin 1s ease-in-out infinite;
+    border-top-color: var(--white);
+    animation: spin 1s linear infinite;
 }
 
 @keyframes spin {
     to { transform: rotate(360deg); }
+}
+
+/* Step indicator */
+.step-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 2rem;
+    color: var(--gray-200);
+}
+
+.step-text {
+    font-size: 0.8rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
 }
 
 @media (max-width: 480px) {
@@ -151,11 +193,10 @@ h1 {
     }
     
     h1 {
-        font-size: 1.5rem;
+        font-size: 2rem;
     }
     
-    .pulse-button {
-        padding: 0.7rem 1.2rem;
-        font-size: 0.9rem;
+    .song-info-item {
+        padding: 1rem;
     }
 } 
