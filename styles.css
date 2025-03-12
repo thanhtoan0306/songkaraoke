@@ -178,15 +178,105 @@ h1::after {
     align-items: center;
     justify-content: space-between;
     margin-bottom: 2rem;
-    color: var(--gray-200);
+    color: var(--gray-800);
 }
 
 .step-text {
     font-size: 0.8rem;
     letter-spacing: 2px;
     text-transform: uppercase;
+    font-weight: 500;
 }
 
+.song-lyrics {
+    color: var(--gray-800);
+    font-size: 0.85rem;
+    font-style: italic;
+    margin-top: 0.5rem;
+    padding-top: 0.5rem;
+    border-top: 1px dashed var(--gray-300);
+    line-height: 1.4;
+    opacity: 0.8;
+}
+
+.song-lyrics::before {
+    content: '"';
+    font-size: 1.2em;
+    margin-right: 2px;
+}
+
+.song-lyrics::after {
+    content: '"';
+    font-size: 1.2em;
+    margin-left: 2px;
+}
+
+.song-info-item:hover .song-lyrics {
+    opacity: 1;
+}
+
+.visitor-count {
+    display: none;
+}
+
+.visitor-count .material-icons {
+    display: none;
+}
+
+#visitorCount {
+    display: none;
+}
+
+.category-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin: 2rem 0 1rem;
+    color: var(--black);
+    border-bottom: 2px solid var(--accent);
+    padding-bottom: 0.5rem;
+}
+
+.category-title:first-child {
+    margin-top: 0;
+}
+
+.song-category {
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--accent);
+    margin-bottom: 0.3rem;
+    font-weight: 500;
+}
+
+.loading-spinner {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--gray-300);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Màu sắc cho từng thể loại */
+.song-info-item.Nhạc.Trẻ {
+    border-left-color: #4CAF50;
+}
+
+.song-info-item.Nhạc.Trữ.Tình\/Bolero {
+    border-left-color: #2196F3;
+}
+
+.song-info-item.Nhạc.Remix {
+    border-left-color: #9C27B0;
+}
+
+/* Responsive */
 @media (max-width: 480px) {
     .container {
         padding: 1.5rem;
@@ -198,5 +288,14 @@ h1::after {
     
     .song-info-item {
         padding: 1rem;
+    }
+    
+    .category-title {
+        font-size: 1.2rem;
+        margin: 1.5rem 0 0.8rem;
+    }
+    
+    .song-lyrics {
+        font-size: 0.8rem;
     }
 } 

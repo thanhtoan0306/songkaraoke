@@ -18,13 +18,12 @@
 <body>
     <div class="container">
         <div class="step-indicator">
-            <span class="step-text">TOP HITS</span>
-            <span class="material-icons">trending_up</span>
+            <span class="step-text">THÁNG 2/2025</span>
         </div>
-        <h1>Top 10 Bài Hát Karaoke Hot Nhất Tháng</h1>
+        <h1>Top Bài Hát Karaoke Hot Nhất Tháng 2/2025</h1>
         <button id="getSongBtn" class="pulse-button">
             <span class="material-icons">auto_awesome</span>
-            Khám phá ngay
+            Xem danh sách
         </button>
         <div id="result" class="result-container">
             <div id="songSuggestion" class="song-info">
@@ -40,7 +39,14 @@
     </div>
     <script src="app.js"></script>
     <script>
-        if ('serviceWorker' in navigator) {
+        // Kiểm tra môi trường production
+        function isProduction() {
+            return window.location.hostname.includes('github.io') || 
+                   window.location.hostname.includes('githubusercontent.com');
+        }
+
+        // Chỉ đăng ký Service Worker trong môi trường production
+        if ('serviceWorker' in navigator && isProduction()) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('sw.js')
                     .then(registration => {
@@ -50,6 +56,8 @@
                         console.log('Lỗi đăng ký Service Worker:', error);
                     });
             });
+        } else if (!isProduction()) {
+            console.log('Service Worker chỉ được kích hoạt trong môi trường production');
         }
     </script>
 </body>
