@@ -57,13 +57,25 @@ async function getSongSuggestion() {
         button.innerHTML = '<div class="loading-spinner"></div>';
         resultDiv.innerHTML = '<div class="song-info-item"><div class="song-info-content"><div class="song-title">Đang tải danh sách...</div></div></div>';
 
-        const prompt = `Vui lòng cung cấp danh sách 10 bài hát karaoke phổ biến nhất trong tháng 2/2025 cho mỗi thể loại (Nhạc Trẻ, Nhạc Trữ Tình/Bolero, Nhạc Remix). Mỗi bài hát cần có tên, ca sĩ và điệp khúc. Trả về kết quả dưới dạng JSON với cấu trúc như sau:
-        {
-            "Nhạc Trẻ": [{"title": "", "artist": "", "chorus": ""}],
-            "Nhạc Trữ Tình/Bolero": [{"title": "", "artist": "", "chorus": ""}],
-            "Nhạc Remix": [{"title": "", "artist": "", "chorus": ""}]
-        }`;
+// Generate random month (1-12)
+const monthNumber = Math.floor(Math.random() * 12) + 1;
 
+// Month names array in Vietnamese
+const monthNames = ["tháng 1", "tháng 2", "tháng 3", "tháng 4", "tháng 5", "tháng 6", "tháng 7", "tháng 8", "tháng 9", "tháng 10", "tháng 11", "tháng 12"];
+const monthName = monthNames[monthNumber - 1]; // Array index is 0-based
+
+// Generate random year (2020-2024)
+const year = Math.floor(Math.random() * (2024 - 2020 + 1)) + 2020;
+
+// Construct the modified prompt using template literals
+const prompt = `Vui lòng cung cấp danh sách 10 bài hát karaoke phổ biến nhất trong ${monthName}/${year} cho mỗi thể loại (Nhạc Trẻ, Nhạc Trữ Tình/Bolero, Nhạc Remix). Mỗi bài hát cần có tên, ca sĩ và  **2 câu đầu bài hát**. Trả về kết quả dưới dạng JSON với cấu trúc như sau:
+{
+    "Nhạc Trẻ": [{"title": "", "artist": "", "chorus": ""}],
+    "Nhạc Trữ Tình/Bolero": [{"title": "", "artist": "", "chorus": ""}],
+    "Nhạc Remix": [{"title": "", "artist": "", "chorus": ""}]
+}`;
+
+console.log(prompt); // To see the generated prompt
         const response = await fetch(API_URL, {
             method: 'POST',
             headers: {
