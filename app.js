@@ -1,5 +1,5 @@
 // Thay GEMINI_API_KEY bằng API key của bạn
-const API_KEY = 'AIzaSyCpc730Drp4OOil3NjIElCqpjX3vpo2JtM';
+const API_KEY = 'AIzaSyBN9DziizLr1J6hEjOZYrGufa4F16DOFks';
 const API_URL = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${API_KEY}`;
 
 const getSongBtn = document.getElementById('getSongBtn');
