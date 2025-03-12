@@ -1,0 +1,12 @@
+{
+  "name": "song-suggestion-ai",
+  "version": "1.0.0",
+  "description": "Ứng dụng gợi ý bài hát sử dụng AI",
+  "scripts": {
+    "start": "http-server -p 8080",
+    "dev": "http-server -p 3000 -c-1"
+  },
+  "dependencies": {
+    "http-server": "^14.1.1"
+  }
+} 

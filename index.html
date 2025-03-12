@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Ứng dụng gợi ý bài hát thông minh sử dụng AI">
+    <meta name="keywords" content="gợi ý bài hát, AI, nhạc Việt Nam, đề xuất nhạc">
+    <meta name="theme-color" content="#1976d2">
+    <meta property="og:title" content="Gợi Ý Bài Hát AI">
+    <meta property="og:description" content="Khám phá những bài hát mới mẻ với AI">
+    <meta property="og:type" content="website">
+    <title>Gợi Ý Bài Hát AI</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" href="icon-192x192.png">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <h1><span class="material-icons">music_note</span> Gợi Ý Bài Hát</h1>
+        <button id="getSongBtn" class="pulse-button">
+            <span class="material-icons">shuffle</span>
+            Gợi Ý Bài Hát Mới
+        </button>
+        <div id="result" class="result-container">
+            <div id="songSuggestion" class="song-info">
+                <div class="song-info-item">
+                    <span class="material-icons">play_circle</span>
+                    Nhấn nút để nhận gợi ý bài hát
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="app.js"></script>
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js')
+                    .then(registration => {
+                        console.log('Service Worker đã được đăng ký:', registration);
+                    })
+                    .catch(error => {
+                        console.log('Lỗi đăng ký Service Worker:', error);
+                    });
+            });
+        }
+    </script>
+</body>
+</html> 
